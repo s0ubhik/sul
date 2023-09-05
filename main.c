@@ -5,13 +5,13 @@
 #include <unistd.h>
 #include "md5-c/md5.h"
 
+
 int print_help(){
     printf("Usage: sulock [PASSWORD] [COMMAND]\n");
     return 0;
 }
 
 int check_pswd(uint8_t pswd[16]){
-    
     uint8_t password[16] = {0x81, 0xdc, 0x9b, 0xdb, 0x52, 0xd0, 0x4d, 0xc2, 0x00, 0x36, 0xdb, 0xd8, 0x31, 0x3e, 0xd0, 0x55};
     for(unsigned int i = 0; i < 16; ++i)
         if (password[i] != pswd[i]) return 0;
@@ -29,13 +29,22 @@ int main(int argc, char* argv[]){
     if (argc < 3 || strcmp(argv[argc-1], "-h") == 0) return print_help();
 
     uint8_t pswd[16];
-    md5String(argv[1], pswd); 
+    md5String(argv[1], pswd);
     if (!check_pswd(pswd)) {
         printf("Permssion Denied!\n");
         return(1);
     }
 
+    char* cmd = malloc(strlen(argv[2]) * sizeof(char));
+    strcpy(cmd, argv[2]);
+    for (int i = 3; i < argc; i++){
+       int s = strlen(argv[i]) + strlen(cmd) + 1;
+       if (s > 256) cmd = realloc(cmd, s*sizeof(char));
+       strcat(cmd, " ");
+       strcat(cmd, argv[i]);
+    }
+
     setuid(0);
-    system(argv[2]);
+    system(cmd);
     return 0;
 }
