@@ -1,6 +1,8 @@
 %.o: %.c
 	$(CC) -c $< -o $@
 
+all: sulock
+
 main_wp.c: main_wp.patch
 	@echo "Configuring without password..."
 	cp main.c main_wp.c
