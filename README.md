@@ -11,12 +11,12 @@ this is a small example of the [setuid](https://en.wikipedia.org/wiki/Setuid) ro
 git clone https://github.com/s0ubhik/sul
 cd sul
 ```
-#### With password
+##### With password
 ```
 make install
 ```
 
-#### Without password
+##### Without password
 ```
 make install NOPASS=1
 ```
