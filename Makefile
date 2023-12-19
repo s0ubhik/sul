@@ -16,7 +16,7 @@ sul: $(DEPS)
 
 install: sul
 	sudo cp $< /usr/bin
-	sudo su -c 'chown root:root $<; chmod 4111 $<'
+	sudo su -c 'chown root:root /usr/bin/$<; chmod 4111 /usr/bin/$<'
 
 uninstall: /usr/bin/sul
 	sudo rm -f $<
